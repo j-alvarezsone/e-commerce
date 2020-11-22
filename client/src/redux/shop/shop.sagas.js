@@ -12,7 +12,7 @@ import {
 
 import ShopActionTypes from './shop.types';
 
-export function* fetchCollectionsStartAsync() {
+export function* fetchCollectionsAsync() {
   try {
     const collectionRef = firestore.collection('collections');
     const snapshot = yield collectionRef.get();
@@ -21,15 +21,15 @@ export function* fetchCollectionsStartAsync() {
       snapshot
     );
     yield put(fetchCollectionsSuccess(collectionsMap));
-  } catch (err) {
-    yield put(fetchCollectionsFailure(err.message));
+  } catch (error) {
+    yield put(fetchCollectionsFailure(error.message));
   }
 }
 
 export function* fetchCollectionsStart() {
   yield takeLatest(
     ShopActionTypes.FETCH_COLLECTIONS_START,
-    fetchCollectionsStartAsync
+    fetchCollectionsAsync
   );
 }
 
